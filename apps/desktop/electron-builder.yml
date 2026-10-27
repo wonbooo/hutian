@@ -1,0 +1,38 @@
+appId: com.hutian.app
+productName: 壶天
+copyright: Copyright © 壶天
+
+# 只打包构建产物和运行时依赖。源码、配置和测试不进安装包。
+files:
+  - out/**
+  - package.json
+  - "!**/*.map"
+
+directories:
+  output: dist
+  buildResources: resources
+
+# 没有原生模块，不需要按 Electron 的 ABI 重新编译依赖。
+npmRebuild: false
+
+# 签名凭据全部从环境变量读取。哪一项没设置，electron-builder 就跳过
+# 对应平台的签名，未签名的安装包仍然能打出来。
+mac:
+  target: dmg
+  category: public.app-category.productivity
+win:
+  target: nsis
+  # 签名凭据不写在这里。需要签名时构建前设置 CSC_LINK 与 CSC_KEY_PASSWORD，
+  # electron-builder 会自动读取。未设置时打出的安装包不签名，仍然可用。
+linux:
+  target: AppImage
+  category: Utility
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  deleteAppDataOnUninstall: false
+
+# 自动更新的发布源先不配置。接入发布渠道时再补 publish 段，
+# 安装包在此之前不会尝试检查更新。
