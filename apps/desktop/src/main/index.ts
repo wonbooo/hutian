@@ -64,6 +64,7 @@ function createWindow(): BrowserWindow {
   });
 
   window.once("ready-to-show", () => {
+    window.maximize();
     window.show();
   });
 
